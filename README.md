@@ -1,4 +1,3 @@
-Dưới đây là README.md đề xuất bằng tiếng Việt cho dự án — tôi đã mở và đọc file quy ước hiện có (vietnamese-coding-conventions-skill.md) rồi tổng hợp thành README ngắn gọn, dễ đọc. Nếu bạn muốn, tôi có thể commit file này vào repository (hãy cho biết branch hoặc để tôi dùng default branch).
 
 ```markdown name=README.md
 # Quy ước đặt tên và coding convention tiếng Việt
