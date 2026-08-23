@@ -1,6 +1,8 @@
 # Quy ước đặt tên và coding convention tiếng Việt
 
-Một bộ quy ước đặt tên và hướng dẫn thực hành (coding conventions) dành cho các dự án .NET/ASP.NET Core (và các stack frontend/khác) do nhóm phát triển ở Việt Nam sử dụng. Mục tiêu: giúp code nhất quán, dễ đọc và dễ bảo trì khi dùng tiếng Việt cho tên code và nhãn giao diện.
+Một bộ quy ước đặt tên và hướng dẫn thực hành (coding conventions) dành cho các dự án do nhóm phát triển ở Việt Nam sử dụng. Mục tiêu: giúp code nhất quán, dễ đọc và dễ bảo trì khi dùng tiếng Việt cho tên code và nhãn giao diện.
+
+Quy tắc **không phụ thuộc ngôn ngữ/stack cụ thể** — ví dụ minh họa có sẵn cho .NET/ASP.NET Core, Java/Spring Boot, Node.js/TypeScript (NestJS) và frontend (React/Vue), dễ áp dụng tương tự cho các ngôn ngữ/framework khác.
 
 Repo này được đóng gói thành một **Claude Skill** (`SKILL.md`), nhưng nội dung quy ước hoàn toàn không phụ thuộc Claude — dùng được với bất kỳ AI coding assistant hoặc IDE nào.
 
@@ -9,7 +11,7 @@ Repo này được đóng gói thành một **Claude Skill** (`SKILL.md`), nhưn
 
 ## Ai nên dùng
 
-- Thành viên đội backend .NET / ASP.NET Core.
+- Thành viên đội backend, ở bất kỳ stack nào (.NET, Java, Node.js/TypeScript, PHP, Python...).
 - Frontend dev khi cần thống nhất nội dung hiển thị (label, placeholder, thông báo).
 - Người review code và viết tài liệu nội bộ.
 - Các bot/AI tạo code cho dự án (áp dụng cùng quy ước).
