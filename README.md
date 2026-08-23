@@ -1,8 +1,11 @@
 # Quy ước đặt tên và coding convention tiếng Việt
 
-Một bộ quy ước đặt tên và những hướng dẫn thực hành (coding conventions) dành cho các dự án .NET/ASP.NET Core (và các stack frontend/khác) do nhóm phát triển ở Việt Nam sử dụng. Mục tiêu: giúp code nhất quán, dễ đọc và dễ bảo trì khi dùng tiếng Việt cho tên code và nhãn giao diện.
+Một bộ quy ước đặt tên và hướng dẫn thực hành (coding conventions) dành cho các dự án .NET/ASP.NET Core (và các stack frontend/khác) do nhóm phát triển ở Việt Nam sử dụng. Mục tiêu: giúp code nhất quán, dễ đọc và dễ bảo trì khi dùng tiếng Việt cho tên code và nhãn giao diện.
 
-Xem tài liệu đầy đủ: [vietnamese-coding-conventions-skill.md](vietnamese-coding-conventions-skill.md)
+Repo này được đóng gói thành một **Claude Skill** (`SKILL.md`), nhưng nội dung quy ước hoàn toàn không phụ thuộc Claude — dùng được với bất kỳ AI coding assistant hoặc IDE nào.
+
+- Chi tiết đầy đủ, luôn cần khi code: [SKILL.md](SKILL.md)
+- Bảng viết tắt chuẩn, ví dụ code, cấu trúc thư mục: [reference.md](reference.md)
 
 ## Ai nên dùng
 
@@ -11,6 +14,19 @@ Xem tài liệu đầy đủ: [vietnamese-coding-conventions-skill.md](vietnames
 - Người review code và viết tài liệu nội bộ.
 - Các bot/AI tạo code cho dự án (áp dụng cùng quy ước).
 
+## Dùng làm Claude Skill
+
+Đặt thư mục này vào nơi Claude Code tìm skill (ví dụ `.claude/skills/vietnamese-coding-conventions/` trong dự án, hoặc thư mục skill cá nhân/marketplace của bạn), giữ nguyên `SKILL.md` và `reference.md` cùng cấp. Claude Code sẽ tự đọc `description` trong frontmatter của `SKILL.md` để biết khi nào cần áp dụng skill này (khi tạo/sửa entity, DTO, database, route, UI text tiếng Việt...).
+
+## Dùng với LLM/AI tool khác
+
+Nội dung trong `SKILL.md`/`reference.md` là hướng dẫn thuần văn bản, không có cú pháp riêng của Claude, nên có thể tái sử dụng nguyên văn cho công cụ khác, ví dụ:
+
+- **Claude Code (dự án khác)**: copy nội dung vào `CLAUDE.md` ở root dự án.
+- **Cursor**: đặt vào `.cursor/rules/vietnamese-coding-conventions.mdc`.
+- **GitHub Copilot**: đặt vào `.github/copilot-instructions.md`.
+- **ChatGPT, Gemini, hoặc LLM khác**: dán nội dung `SKILL.md` (+ `reference.md` khi cần tra bảng viết tắt) vào system prompt hoặc custom instructions.
+
 ## Những điểm chính
 
 - Nguyên tắc vàng: mọi thứ người dùng cuối nhìn thấy → tiếng Việt CÓ DẤU; mọi thứ máy/IDE/compiler đọc → tiếng Việt KHÔNG DẤU.
@@ -18,69 +34,7 @@ Xem tài liệu đầy đủ: [vietnamese-coding-conventions-skill.md](vietnames
 - Tên bảng/cột DB: UPPERCASE KHÔNG DẤU (ví dụ: `NHANVIEN`, `HOTEN`).
 - Label/button/validation/message UI: Tiếng Việt CÓ DẤU (ví dụ: "Họ và tên", "Lưu").
 - Route URL: kebab-case KHÔNG DẤU (ví dụ: `api/nhan-vien`).
-- Bảng viết tắt chuẩn được đề xuất (ví dụ: TT, CT, DS, DM, SL, PB, KH, NCC, BC) — dùng thống nhất toàn dự án; tránh tự sáng tạo viết tắt nếu chưa được thống nhất.
-
-## Quy tắc viết tắt (tóm tắt)
-
-- Khi tên đầy đủ vượt 30 ký tự hoặc gây khó đọc, áp dụng viết tắt theo bảng chuẩn.
-- Chỉ viết tắt phần bổ nghĩa, không viết tắt từ chính.
-- Viết tắt phải nằm trong bảng chuẩn — không tự sáng tạo viết tắt mới khi chưa cập nhật bảng.
-- Viết tắt giữ PascalCase: `CTDonHang` ✅, không phải `ctDonHang` hay `CT_DonHang`.
-- Ví dụ: `TTNhanVien` (Thông tin → TT), `DSNhanVien` (Danh sách → DS), `MaNhanVien` (Mã → Ma).
-
-## Cấu trúc thư mục đề xuất
-
-Gợi ý cấu trúc thư mục (áp dụng cho dự án .NET có nhiều layer):
-
-```
-src/
-├── Domain/
-│   ├── Entities/          NhanVien.cs, DonHang.cs
-│   ├── Enums/             TrangThaiDonHang.cs
-│   └── Interfaces/        INhanVienRepository.cs
-├── Application/
-│   ├── DTOs/              NhanVienDto.cs, TaoNhanVienDto.cs
-│   ├── ViewModels/        DSNhanVienViewModel.cs
-│   ├── Services/          NhanVienService.cs
-│   └── Validators/        TaoNhanVienValidator.cs
-├── Infrastructure/
-│   ├── Data/              ApplicationDbContext.cs
-│   ├── Repositories/      NhanVienRepository.cs
-│   └── Migrations/
-└── Web/ (hoặc Api/)
-    ├── Controllers/       NhanVienController.cs
-    ├── Pages/ hoặc Views/
-    └── wwwroot/
-```
-
-## Ví dụ nhanh
-
-- Class entity:
-
-```csharp
-[Table("NHANVIEN")]
-public class NhanVien
-{
-    [Key][Column("MANV")]
-    public int MaNhanVien { get; set; }
-
-    [Column("HOTEN")]
-    [Display(Name = "Họ và tên")]
-    public string HoTen { get; set; }
-}
-```
-
-- Route & controller:
-
-```csharp
-[ApiController]
-[Route("api/nhan-vien")]
-public class NhanVienController : ControllerBase
-{
-    [HttpGet]
-    public async Task<ActionResult<List<NhanVienDto>>> LayDanhSach() { }
-}
-```
+- Bảng viết tắt chuẩn được đề xuất (ví dụ: TT, CT, DS, DM, SL, PB, KH, NCC, BC) — dùng thống nhất toàn dự án; tránh tự sáng tạo viết tắt nếu chưa được thống nhất. Xem đầy đủ tại [reference.md](reference.md#bảng-viết-tắt-chuẩn).
 
 ## Checklist trước khi commit
 
@@ -94,14 +48,11 @@ public class NhanVienController : ControllerBase
 
 ## Cập nhật quy ước
 
-1. Sửa file `vietnamese-coding-conventions-skill.md` bằng PR.
+1. Sửa file `SKILL.md` hoặc `reference.md` bằng PR.
 2. Viết rõ lý do thay đổi trong mô tả PR.
 3. Cần ít nhất 1 reviewer duyệt trước khi merge.
 4. Sau merge, thông báo cho team (chat/channel nội bộ).
 
 ## Góp ý & liên hệ
 
-Mọi góp ý hoặc đề xuất viết tắt mới, sửa quy tắc, vui lòng tạo PR sửa file `vietnamese-coding-conventions-skill.md` hoặc mở issue trong repository.
-
----
-README này là bản tóm tắt — nội dung chi tiết và ví dụ đầy đủ nằm trong `vietnamese-coding-conventions-skill.md`.
+Mọi góp ý hoặc đề xuất viết tắt mới, sửa quy tắc, vui lòng tạo PR sửa `SKILL.md`/`reference.md` hoặc mở issue trong repository.
