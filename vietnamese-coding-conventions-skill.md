@@ -1,6 +1,6 @@
 # Quy ước đặt tên dự án
 
-Tài liệu này định nghĩa quy ước đặt tên cho toàn bộ dự án. Mọi code mới (do người hoặc AI tạo ra) đều phải tuân thủ. Khi sửa code cũ chưa theo quy ước, refactor dần dần — không sửa hàng loạt nếu chưa được duyệt.
+Tài liệu này định nghĩa quy ước đặt tên cho toàn bộ dự án. Mọi code mới (do người hoặc AI tạo ra) đều phải tuân thủ. Khi sửa code cũ chưa theo quy ước, rời rạc hoặc khác phong cách, hãy cập nhật theo quy ước này và mở PR nêu rõ lý do.
 
 ## 1. Nguyên tắc cốt lõi
 
@@ -80,38 +80,34 @@ Khi tên đầy đủ vượt **30 ký tự** hoặc gây khó đọc, áp dụn
 ## 3. Entity & Database
 
 ### 3.1. Class entity
-- File và class trùng tên: `NhanVien.cs` chứa `class NhanVien`.
+- File và class trùng tên: `NhanVien.cs` chứa `class NhanVien` (mặc định khuyến nghị PascalCase không dấu).
 - Class: PascalCase tiếng Việt không dấu.
 - Mapping: `[Table("UPPERCASE")]`, `[Column("UPPERCASE")]`.
 - Property: PascalCase không dấu, có `[Display(Name = "...")]` tiếng Việt có dấu cho UI.
 - Validation message: tiếng Việt có dấu.
 
+### Mapping trực tiếp với database
+
+Đối với những bảng trong schema mà class map TRỰC TIẾP tới table (không phải view hoặc projection), có thể đặt tên class và property giống hệt tên table và cột trong database (UPPERCASE) để đảm bảo tính nhất quán với schema, dễ dò log/SQL và tránh nhầm lẫn khi mapping.
+
+Ví dụ (cú pháp chấp nhận):
+
 ```csharp
 [Table("NHANVIEN")]
-public class NhanVien
+public class NHANVIEN
 {
     [Key]
     [Column("MANV")]
-    public int MaNhanVien { get; set; }
+    public int MANV { get; set; }
 
     [Column("HOTEN")]
-    [MaxLength(100)]
-    [Display(Name = "Họ và tên")]
-    [Required(ErrorMessage = "Vui lòng nhập họ tên")]
-    public string HoTen { get; set; }
-
-    [Column("NGAYSINH")]
-    [Display(Name = "Ngày sinh")]
-    [DataType(DataType.Date)]
-    public DateTime NgaySinh { get; set; }
-
-    [Column("MAPB")]
-    [Display(Name = "Phòng ban")]
-    public int MaPhongBan { get; set; }
-
-    public virtual PhongBan PhongBan { get; set; }
+    public string HOTEN { get; set; }
 }
 ```
+
+Ghi chú:
+- Cách này hợp lệ nếu đội thống nhất dùng tên UPPERCASE cho các class entity map trực tiếp tới bảng DB.
+- Nếu muốn theo chuẩn C# truyền thống, vẫn có thể giữ PascalCase cho tên class/property và dùng attribute `[Table]`/`[Column]` để map — cả hai cách đều được chấp nhận nhưng cần thống nhất toàn dự án.
 
 ### 3.2. Database View
 - Tên view: `VW_TenView` (uppercase phần `VW_`, PascalCase phần tên).
@@ -278,6 +274,7 @@ src/
 
 - [ ] Tên class, file, biến, method: tiếng Việt không dấu PascalCase/camelCase.
 - [ ] Tên bảng và cột: UPPERCASE không dấu.
+- [ ] Nếu một class map TRỰC TIẾP tới table trong database, có thể đặt tên class và properties giống hệt UPPERCASE (ví dụ `NHANVIEN`, `MANV`, `HOTEN`) để khớp schema.
 - [ ] `[Display(Name = "...")]`, validation message, label UI: tiếng Việt CÓ DẤU.
 - [ ] Tên dài quá 30 ký tự đã viết tắt theo bảng mục 2.1 (không tự chế).
 - [ ] Identity table giữ nguyên tên mặc định.
